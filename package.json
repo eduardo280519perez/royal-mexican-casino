@@ -1,0 +1,1 @@
+{"dependencies":{"bcryptjs":"^2.4.3","express":"^4.21.2","pg":"^8.23.1"},"description":"Royal Mexican Casino — demo con fichas de prueba, sin dinero real. Registro con teléfono y contraseña, 3 juegos originales, escalera VIP y panel de admin.","engines":{"node":">=24"},"main":"server.js","name":"royal-mexican-casino","scripts":{"start":"node server.js"},"version":"1.0.0"}

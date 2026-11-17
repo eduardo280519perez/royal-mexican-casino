@@ -1,0 +1,27 @@
+# Royal Mexican Casino — despliegue en Render (plan gratis)
+#
+# Uso: sube este repositorio a GitHub y en Render usa "New -> Blueprint"
+# o "New -> Web Service" con este repositorio.
+#
+# Persistencia: la app guarda todo en Postgres externo (DATABASE_URL),
+# por ejemplo la base gratis de Supabase. Por eso NO necesita disco
+# persistente: las instancias GRATIS de Render no admiten discos y su
+# sistema de archivos es efímero, pero eso ya no importa porque los datos
+# viven en Postgres y sobreviven a reinicios y redespliegues.
+# - Crea la base gratis en Supabase (https://supabase.com) y copia su
+#   "Connection string" (URI, con sslmode=require).
+# - Ponla en Render como variable de entorno DATABASE_URL (secreta).
+# - PUBLIC_URL se pone después del primer despliegue, cuando Render te dé
+#   la URL (https://tu-servicio.onrender.com).
+services:
+  - type: web
+    name: royal-mexican-casino
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 24
+      - key: DATABASE_URL
+        sync: false

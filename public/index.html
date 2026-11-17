@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Royal Mexican Casino — Demo</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- ============ AUTENTICACIÓN ============ -->
+  <section id="view-auth" class="view">
+    <div class="auth-card">
+      <div class="logo"><img src="/assets/sym-corona.png" alt="Corona Royal Mexican Casino"></div>
+      <h1 class="brand">Royal Mexican Casino</h1>
+      <p class="tagline">Demo con fichas de prueba, sin dinero real</p>
+      <div class="auth-tabs">
+        <button id="tab-login" class="auth-tab active">Entrar</button>
+        <button id="tab-register" class="auth-tab">Registrarme</button>
+      </div>
+      <form id="auth-form">
+        <label>Teléfono (10 dígitos)
+          <input id="auth-phone" type="tel" inputmode="numeric" placeholder="5512345678" maxlength="10" required>
+        </label>
+        <label>Contraseña
+          <input id="auth-password" type="password" placeholder="Mínimo 6 caracteres" minlength="6" required>
+        </label>
+        <p id="auth-error" class="error hidden"></p>
+        <button type="submit" id="auth-submit" class="btn-gold big">Entrar</button>
+      </form>
+      <p class="auth-note">Tu teléfono es tu usuario. No pedimos verificación por SMS.<br>Al registrarte recibes <b>$1,000 en fichas de prueba</b>.</p>
+    </div>
+  </section>
+
+  <!-- ============ LOBBY ============ -->
+  <section id="view-lobby" class="view hidden">
+    <header class="topbar">
+      <div class="brand-mini">👑 <span>Royal Mexican</span></div>
+      <div class="top-right">
+        <button id="btn-sound" class="icon-btn" title="Sonido">🔊</button>
+        <div class="balance-box">Saldo <b id="balance">$1,000</b></div>
+        <div id="vip-badge" class="vip-badge">Bronce 1</div>
+        <button id="btn-logout" class="icon-btn" title="Salir">🚪</button>
+      </div>
+    </header>
+
+    <div class="demo-notice">🎲 Demo con fichas de prueba, sin dinero real. No hay depósitos ni retiros.</div>
+
+    <div class="banner">
+      <div class="banner-text">
+        <small>BIENVENIDA</small>
+        <h2>$1,000 en fichas de prueba</h2>
+        <p>6 tragamonedas, ruleta, blackjack, bacará y video póker</p>
+      </div>
+    </div>
+
+    <div class="search-row">
+      <input id="search" type="search" placeholder="🔍 Buscar juego...">
+    </div>
+    <div class="cats">
+      <button class="cat active" data-cat="todos">Todos</button>
+      <button class="cat" data-cat="slot">Tragamonedas</button>
+      <button class="cat" data-cat="mesa">Juegos de mesa</button>
+      <button class="cat" data-cat="cartas">Cartas</button>
+    </div>
+
+    <h3 class="section-title">🔥 Tragamonedas destacadas</h3>
+    <div id="slot-grid" class="game-grid"></div>
+
+    <h3 class="section-title">🎲 Juegos de mesa y cartas</h3>
+    <div id="table-grid" class="game-grid">
+      <article class="game-card" data-cat="mesa" data-game="roulette" data-name="Ruleta Europea">
+        <div class="game-art"><img src="/assets/wheel.jpg" alt="Ruleta Europea"></div>
+        <h3>Ruleta Europea</h3>
+        <p>0–36 · Número directo paga 36× · Rojo/Negro, Par/Impar</p>
+        <button class="btn-gold play-btn" data-open="roulette">JUGAR AHORA</button>
+      </article>
+      <article class="game-card" data-cat="cartas" data-game="blackjack" data-name="Blackjack">
+        <div class="game-art"><img src="/assets/card-back.jpg" alt="Blackjack"></div>
+        <h3>Blackjack</h3>
+        <p>Blackjack paga 3 a 2 · Pedir, Plantarse y Doblar</p>
+        <button class="btn-gold play-btn" data-open="blackjack">JUGAR AHORA</button>
+      </article>
+      <article class="game-card" data-cat="mesa" data-game="baccarat" data-name="Bacará">
+        <div class="game-art"><img src="/assets/bj-table.jpg" alt="Bacará"></div>
+        <h3>Bacará</h3>
+        <p>Punto Banco · Jugador 2× · Banca 1.95× · Empate 9×</p>
+        <button class="btn-gold play-btn" data-open="baccarat">JUGAR AHORA</button>
+      </article>
+      <article class="game-card" data-cat="cartas" data-game="videopoker" data-name="Video Póker">
+        <div class="game-art"><img src="/assets/card-back.jpg" alt="Video Póker"></div>
+        <h3>Video Póker</h3>
+        <p>Jacks or Better · Escalera Real paga 250× · Elige qué cartas guardar</p>
+        <button class="btn-gold play-btn" data-open="videopoker">JUGAR AHORA</button>
+      </article>
+    </div>
+
+    <section class="invite-box">
+      <h3>📣 Invita a tus amigos</h3>
+      <p>Comparte este enlace para que se registren y jueguen:</p>
+      <div class="invite-row">
+        <input id="invite-url" readonly value="">
+        <button id="btn-copy-invite" class="btn-gold">Copiar</button>
+      </div>
+      <p id="invite-copied" class="ok hidden">¡Enlace copiado!</p>
+    </section>
+
+    <nav class="bottom-nav">
+      <button class="nav-btn active" data-nav="lobby">🏠<span>Inicio</span></button>
+      <button class="nav-btn" data-nav="vip">👑<span>VIP</span></button>
+      <button class="nav-btn" data-nav="history">📜<span>Historial</span></button>
+      <button class="nav-btn" data-nav="rules">📖<span>Reglas</span></button>
+      <button class="nav-btn hidden" data-nav="admin" id="nav-admin">🛡️<span>Admin</span></button>
+    </nav>
+  </section>
+
+  <!-- ============ VIP ============ -->
+  <section id="view-vip" class="view hidden">
+    <header class="subhead"><button class="back-btn" data-back>‹ Volver</button><h2>Programa VIP</h2></header>
+    <div class="vip-current">
+      <p>Tu nivel actual</p>
+      <h3 id="vip-level">Bronce 1</h3>
+      <div class="progress"><div id="vip-progress" class="progress-fill"></div></div>
+      <p id="vip-next">Te faltan $10,000 jugados para Bronce 2</p>
+      <p class="muted">Total jugado: <b id="vip-wagered">$0</b></p>
+    </div>
+    <div id="vip-ladder" class="vip-ladder"></div>
+  </section>
+
+  <!-- ============ HISTORIAL ============ -->
+  <section id="view-history" class="view hidden">
+    <header class="subhead"><button class="back-btn" data-back>‹ Volver</button><h2>Mi historial</h2></header>
+    <div id="history-list" class="history-list"><p class="muted">Cargando...</p></div>
+  </section>
+
+  <!-- ============ REGLAS ============ -->
+  <section id="view-rules" class="view hidden">
+    <header class="subhead"><button class="back-btn" data-back>‹ Volver</button><h2>Reglas</h2></header>
+    <div class="rules">
+      <h3>🎰 Tragamonedas</h3>
+      <p>5 rodillos × 3 filas, 20 líneas de pago. El comodín sustituye a todos los símbolos menos al scatter y a la moneda. 3, 4 o 5 scatters regalan 10, 15 o 20 giros gratis con los premios de línea al doble. 5 o más monedas activan el Respin Dorado: las monedas se quedan fijas con valores de 1× a 25× tu apuesta, cada moneda nueva reinicia los respins a 3, y si llenas toda la rejilla ganas un tesoro de 50×.</p>
+      <h3>🎡 Ruleta Europea</h3>
+      <p>Números del 0 al 36. El número directo paga 36× (35 a 1). Rojo/Negro, Par/Impar, 1–18 y 19–36 pagan 2×. El 0 es verde y hace perder las apuestas de color, par/impar y mitades.</p>
+      <h3>🃏 Blackjack</h3>
+      <p>Gana quien se acerque más a 21 sin pasarse. El dealer pide hasta 17. El blackjack (21 con dos cartas) paga 3 a 2. Puedes pedir, plantarte o doblar (doblas la apuesta, recibes una sola carta y se juega la mano).</p>
+      <h3>🎴 Bacará</h3>
+      <p>Se reparten dos cartas al Jugador y dos a la Banca; gana la mano más cercana a 9 (las cartas suman módulo 10). Apuesta a Jugador paga 2×, a Banca 1.95× y al Empate 9×. Si empatan, las apuestas a Jugador y Banca se devuelven.</p>
+      <h3>🃏 Video Póker</h3>
+      <p>Jacks or Better: recibes 5 cartas, eliges cuáles guardar y se reemplazan las demás. Paga el Par de Jotas o mejor (1×), Dos Pares (2×), Tercia (3×), Escalera (4×), Color (6×), Full House (9×), Póker (25×), Escalera de Color (50×) y Escalera Real (250×).</p>
+      <h3>👑 VIP</h3>
+      <p>Subes de nivel con el total que juegas. Cada nivel exige $10,000 jugados más que el anterior. El nivel máximo es REAL: $1,200,000 jugados en total. El total jugado no se reinicia aunque el administrador restablezca tu saldo.</p>
+      <p class="demo-notice">Demo con fichas de prueba, sin dinero real. Las fichas no tienen valor ni se pueden retirar.</p>
+    </div>
+  </section>
+
+  <!-- ============ ADMIN ============ -->
+  <section id="view-admin" class="view hidden">
+    <header class="subhead"><button class="back-btn" data-back>‹ Volver</button><h2>Panel de administración</h2></header>
+    <div id="admin-stats" class="admin-stats"></div>
+    <div id="admin-list" class="admin-list"><p class="muted">Cargando jugadores...</p></div>
+  </section>
+
+  <!-- ============ OVERLAY: SLOT (genérico, 5 temas) ============ -->
+  <div id="overlay-slot" class="overlay hidden">
+    <div class="game-room slot-room">
+      <img id="slot-cabinet" class="slot-cabinet" src="/assets/slot-cabinet-top.jpg" alt="">
+      <header class="room-head">
+        <button class="close-btn" data-close>✕ Cerrar</button>
+        <h2 id="slot-title">🎰 Fiesta Dorada</h2>
+        <div class="room-balance">Saldo <b class="js-balance">$1,000</b></div>
+      </header>
+      <div class="slot-machine">
+        <div class="slot-hero"><img id="slot-hero-img" src="/assets/aguila-hero.jpg" alt="Águila Dorada"></div>
+        <div class="jackpot-bar">
+          <div class="jp jp-grand"><span>GRAND</span><b>$50,000</b></div>
+          <div class="jp jp-major"><span>MAYOR</span><b>$5,000</b></div>
+          <div class="jp jp-minor"><span>MENOR</span><b>$500</b></div>
+          <div class="jp jp-mini"><span>MINI</span><b>$100</b></div>
+        </div>
+        <div id="slot-grid" class="slot-grid"></div>
+        <div id="slot-message" class="slot-message">¡Buena suerte!</div>
+        <div id="fs-banner" class="fs-banner hidden">🎉 GIROS GRATIS: <b id="fs-count">0</b> restantes · premios ×2</div>
+        <div id="respin-banner" class="respin-banner hidden">
+          <img id="respin-art" src="/assets/sym-pot.png" alt="Tesoro">
+          🪙 RESPIN DORADO · <b id="respin-count">3</b> respins ·
+          <button id="btn-respin" class="btn-gold">GIRAR RESPIN</button>
+        </div>
+        <div class="slot-controls">
+          <label>Apuesta
+            <select id="slot-bet">
+              <option value="1">$1</option><option value="5">$5</option>
+              <option value="10" selected>$10</option><option value="25">$25</option>
+              <option value="50">$50</option><option value="100">$100</option>
+              <option value="500">$500</option><option value="1000">$1,000</option>
+            </select>
+          </label>
+          <button id="btn-spin" class="btn-gold big">🎰 GIRAR</button>
+          <button id="btn-auto" class="btn-dark">Auto ×10</button>
+          <button id="btn-paytable" class="btn-dark">Tabla de pagos</button>
+        </div>
+        <div class="slot-last">Último premio: <b id="slot-last-win">$0</b></div>
+      </div>
+      <div id="paytable" class="paytable hidden"></div>
+    </div>
+  </div>
+
+  <!-- ============ OVERLAY: RULETA ============ -->
+  <div id="overlay-roulette" class="overlay hidden">
+    <div class="game-room">
+      <header class="room-head">
+        <button class="close-btn" data-close>✕ Cerrar</button>
+        <h2>🎡 Ruleta Europea</h2>
+        <div class="room-balance">Saldo <b class="js-balance">$1,000</b></div>
+      </header>
+      <div class="roulette-table">
+        <div id="wheel" class="wheel"><img id="wheel-img" src="/assets/wheel.jpg" alt="Rueda de ruleta"><div id="wheel-num" class="wheel-num">?</div></div>
+        <div id="roulette-result" class="slot-message">Elige tu apuesta y gira</div>
+        <div class="roulette-board" id="roulette-board"></div>
+        <div class="roulette-bets">
+          <button class="chip-bet" data-type="red"><span class="dot red"></span> Rojo · 2×</button>
+          <button class="chip-bet" data-type="black"><span class="dot black"></span> Negro · 2×</button>
+          <button class="chip-bet" data-type="even">Par · 2×</button>
+          <button class="chip-bet" data-type="odd">Impar · 2×</button>
+          <button class="chip-bet" data-type="low">1–18 · 2×</button>
+          <button class="chip-bet" data-type="high">19–36 · 2×</button>
+        </div>
+        <div class="slot-controls">
+          <label>Apuesta
+            <select id="roulette-bet">
+              <option value="1">$1</option><option value="5">$5</option>
+              <option value="10" selected>$10</option><option value="25">$25</option>
+              <option value="50">$50</option><option value="100">$100</option>
+              <option value="500">$500</option><option value="1000">$1,000</option>
+            </select>
+          </label>
+          <span id="roulette-pick" class="muted">Toca un número o un botón de apuesta</span>
+        </div>
+        <button id="btn-roulette-spin" class="btn-gold big" disabled>GIRAR RULETA</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ OVERLAY: BLACKJACK ============ -->
+  <div id="overlay-blackjack" class="overlay hidden">
+    <div class="game-room bj-room">
+      <header class="room-head">
+        <button class="close-btn" data-close>✕ Cerrar</button>
+        <h2>🃏 Blackjack</h2>
+        <div class="room-balance">Saldo <b class="js-balance">$1,000</b></div>
+      </header>
+      <div class="bj-table">
+        <div class="bj-row"><span>Dealer (<b id="bj-dealer-value">?</b>)</span><div id="bj-dealer" class="cards"></div></div>
+        <div id="bj-message" class="slot-message">Apuesta y reparte</div>
+        <div class="bj-row"><span>Tú (<b id="bj-player-value">?</b>)</span><div id="bj-player" class="cards"></div></div>
+        <div class="slot-controls">
+          <label>Apuesta
+            <select id="bj-bet">
+              <option value="1">$1</option><option value="5">$5</option>
+              <option value="10" selected>$10</option><option value="25">$25</option>
+              <option value="50">$50</option><option value="100">$100</option>
+              <option value="500">$500</option><option value="1000">$1,000</option>
+            </select>
+          </label>
+          <button id="btn-bj-deal" class="btn-gold big">REPARTIR</button>
+        </div>
+        <div class="bj-actions">
+          <button id="btn-bj-hit" class="btn-gold" disabled>Pedir</button>
+          <button id="btn-bj-stand" class="btn-gold" disabled>Plantarse</button>
+          <button id="btn-bj-double" class="btn-dark" disabled>Doblar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ OVERLAY: BACARÁ ============ -->
+  <div id="overlay-baccarat" class="overlay hidden">
+    <div class="game-room bj-room">
+      <header class="room-head">
+        <button class="close-btn" data-close>✕ Cerrar</button>
+        <h2>🎴 Bacará</h2>
+        <div class="room-balance">Saldo <b class="js-balance">$1,000</b></div>
+      </header>
+      <div class="bj-table">
+        <div class="bj-row"><span>Banca (<b id="bac-banker-value">?</b>)</span><div id="bac-banker" class="cards"></div></div>
+        <div id="bac-message" class="slot-message">Elige a quién le apuestas</div>
+        <div class="bj-row"><span>Jugador (<b id="bac-player-value">?</b>)</span><div id="bac-player" class="cards"></div></div>
+        <div class="slot-controls">
+          <label>Apuesta
+            <select id="bac-bet">
+              <option value="1">$1</option><option value="5">$5</option>
+              <option value="10" selected>$10</option><option value="25">$25</option>
+              <option value="50">$50</option><option value="100">$100</option>
+              <option value="500">$500</option><option value="1000">$1,000</option>
+            </select>
+          </label>
+        </div>
+        <div class="bj-actions">
+          <button class="btn-gold bac-btn" data-bet="player">Jugador · 2×</button>
+          <button class="btn-gold bac-btn" data-bet="banker">Banca · 1.95×</button>
+          <button class="btn-dark bac-btn" data-bet="tie">Empate · 9×</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ OVERLAY: VIDEO PÓKER ============ -->
+  <div id="overlay-videopoker" class="overlay hidden">
+    <div class="game-room bj-room">
+      <header class="room-head">
+        <button class="close-btn" data-close>✕ Cerrar</button>
+        <h2>🃏 Video Póker</h2>
+        <div class="room-balance">Saldo <b class="js-balance">$1,000</b></div>
+      </header>
+      <div class="bj-table">
+        <div id="vp-message" class="slot-message">Apuesta y reparte 5 cartas</div>
+        <div id="vp-cards" class="cards vp-cards"></div>
+        <div class="slot-controls">
+          <label>Apuesta
+            <select id="vp-bet">
+              <option value="1">$1</option><option value="5">$5</option>
+              <option value="10" selected>$10</option><option value="25">$25</option>
+              <option value="50">$50</option><option value="100">$100</option>
+              <option value="500">$500</option><option value="1000">$1,000</option>
+            </select>
+          </label>
+          <button id="btn-vp-deal" class="btn-gold big">REPARTIR</button>
+          <button id="btn-vp-draw" class="btn-gold big hidden">CAMBIAR CARTAS</button>
+        </div>
+        <p class="muted small">Toca las cartas para guardarlas. Par de Jotas o mejor ya paga.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+  <div id="coin-rain" class="coin-rain hidden"></div>
+</div>
+<script src="/app.js"></script>
+</body>
+</html>
